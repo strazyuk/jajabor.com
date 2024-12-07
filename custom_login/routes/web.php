@@ -5,25 +5,30 @@ use App\Http\Controllers\FlightController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComplaintController;
 
-// Welcome Route
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Dashboard Route (requires authentication)
 Route::get('/dashboard', function () {
     return view('dashboard'); // Replace with the correct view for the dashboard
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Authenticated Routes
     // Profile Routes
-    Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::match(['put', 'post'], 'profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::middleware('auth')->group(function () {
+        Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::match(['PUT', 'POST'], 'profile/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Flight Routes
+// Flight Routes
     Route::get('/flights', [FlightController::class, 'index'])->name('flights.index');
     Route::get('/flights/{flight}', [FlightController::class, 'show'])->name('flights.show');
+    });
+
+
 
    
 

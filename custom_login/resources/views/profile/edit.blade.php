@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
 
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Success message -->
@@ -14,6 +15,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+
 
             <!-- Error messages -->
             @if ($errors->any())
@@ -27,11 +29,13 @@
                 </div>
             @endif
 
+
             <!-- Profile Form -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                 <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+
 
                     <!-- Name Field -->
                     <div class="mb-4">
@@ -39,11 +43,13 @@
                         <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" class="form-control block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300" required>
                     </div>
 
+
                     <!-- Email Field -->
                     <div class="mb-4">
                         <label for="email" class="block font-bold text-gray-700 dark:text-gray-300">Email</label>
                         <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" class="form-control block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300" required>
                     </div>
+
 
                     <!-- Profile Image Field -->
                     <div class="mb-4">
@@ -54,16 +60,19 @@
                         <input type="file" name="profile_image" id="profile_image" class="form-control block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-300">
                     </div>
 
+
                     <!-- Password Fields -->
                     <div class="mb-4">
                         <label for="password" class="block font-bold text-gray-700 dark:text-gray-300">Password (leave blank to keep current)</label>
                         <input type="password" name="password" id="password" class="form-control block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-300">
                     </div>
 
+
                     <div class="mb-4">
                         <label for="password_confirmation" class="block font-bold text-gray-700 dark:text-gray-300">Confirm Password</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-300">
                     </div>
+
 
                     <!-- Update Button -->
                     <div class="flex justify-end">
@@ -72,11 +81,13 @@
                 </form>
             </div>
 
+
 <!-- Delete Account Form -->
 <div class="mt-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
     <form method="POST" action="{{ route('profile.destroy') }}">
         @csrf
         @method('DELETE')
+
 
         <!-- Password Confirmation -->
         <div class="mb-4">
@@ -84,12 +95,15 @@
             <input type="password" name="password" id="delete_password" class="form-control block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-300" required>
         </div>
 
+
         <button type="submit" class="btn btn-danger px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">Delete Account</button>
     </form>
 </div>
 
+
         </div>
     </div>
+
 
     <!-- Styling -->
     <style>
@@ -99,19 +113,23 @@
             right: 0.5rem;
         }
 
+
         .btn-primary {
             background-color: #1d4ed8;
             border: none;
         }
 
+
         .btn-primary:hover {
             background-color: #1e40af;
         }
+
 
         .btn-danger {
             background-color: #dc2626;
             border: none;
         }
+
 
         .btn-danger:hover {
             background-color: #b91c1c;

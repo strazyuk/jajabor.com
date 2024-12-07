@@ -137,11 +137,13 @@
         <!-- Page Content -->
         <main class="py-6 px-4 sm:px-6 lg:px-8">
             <!-- Button to redirect to the flights page -->
-            <div class="mb-4">
-                <a href="{{ route('flights.index') }}" class="btn-primary">Go to Flights</a>
-            </div>
 
-            @yield('content')
+            @if(View::hasSection('content'))
+        @yield('content')
+    @else
+        {{ $slot ?? '' }}
+    @endif
+
         </main>
     </div>
 </body>

@@ -15,7 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('complaint.create')" :active="request()->routeIs('complaint.create')">
+                        {{ __('File a Complaint') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('flights.index')" :active="request()->routeIs('flights.index')">
+                        {{ __('Go to Flights') }}
+                    </x-nav-link>
                 </div>
+                
             </div>
 
             <!-- Settings Dropdown -->

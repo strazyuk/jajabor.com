@@ -136,7 +136,6 @@
 
         <!-- Page Content -->
         <main class="py-6 px-4 sm:px-6 lg:px-8">
-            <!-- Button to redirect to the flights page -->
 
             @if(View::hasSection('content'))
         @yield('content')

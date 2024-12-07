@@ -10,6 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="{{ asset('css/complaints.css') }}" rel="stylesheet">
 
     <!-- Custom Twitter-like Styles -->
     <style>
@@ -134,9 +135,7 @@
             </header>
         @endisset
 
-        <!-- Page Content -->
-        <main class="py-6 px-4 sm:px-6 lg:px-8">
-            <!-- Button to redirect to the flights page -->
+
 
             @if(View::hasSection('content'))
         @yield('content')

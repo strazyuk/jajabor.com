@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FlightController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ComplaintController;
 
 
 
@@ -29,6 +30,13 @@ Route::get('/dashboard', function () {
 
 
 
+   
+
+Route::middleware('auth')->group(function () {
+    Route::get('/complaint', [ComplaintController::class, 'create'])->name('complaint.create');
+    Route::post('/complaint', [ComplaintController::class, 'store'])->name('complaint.store');
+});
+    
 
 // Include Auth Routes (login, register, etc.)
 require __DIR__ . '/auth.php';

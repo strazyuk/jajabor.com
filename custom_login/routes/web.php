@@ -4,8 +4,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\FavoriteController;
 
 use Illuminate\Support\Facades\Route;
+
+
+
+Route::delete('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+
+Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 
 Route::get('/', function () {
     return view('welcome');

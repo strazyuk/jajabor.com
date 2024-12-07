@@ -58,12 +58,25 @@
             border-radius: 8px;
             margin-bottom: 15px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .hotel-card h4 {
             margin: 0 0 10px;
         }
         .hotel-card p {
             margin: 5px 0;
+        }
+        .heart-button {
+            font-size: 24px;
+            color: gray;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .heart-button.active {
+            color: red;
         }
     </style>
 </head>
@@ -80,12 +93,25 @@
         <div class="hotel-list">
             @if($hotels->isNotEmpty())
                 <h3>Search Results</h3>
-                @foreach($hotels as $hotel)
-                    <div class="hotel-card">
-                        <h4>{{ $hotel->name }}</h4>
-                        <p><strong>Location:</strong> {{ $hotel->location }}</p>
-                    </div>
-                @endforeach
+                @foreach ($hotels as $hotel)
+    <div class="hotel-card">
+        <h4>{{ $hotel->name }}</h4>
+        <p><strong>Location:</strong> {{ $hotel->location }}</p>
+
+        <!-- Heart Button -->
+        <form action="{{ route('favorites.toggle') }}" method="POST" style="display: inline;">
+
+            @csrf
+            <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">
+            <button type="submit" style="background: none; border: none; cursor: pointer;">
+                <span style="font-size: 24px; color: {{ in_array($hotel->id, $favoriteHotels) ? 'red' : 'gray' }};">
+                    ♥
+                </span>
+            </button>
+        </form>
+    </div>
+@endforeach
+
             @else
                 <p>No hotels found for "{{ request('search') }}".</p>
             @endif

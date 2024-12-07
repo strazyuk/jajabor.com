@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Hotel; // Import the Hotel model
+use App\Models\Favorite;
 
 class HotelController extends Controller
 {
@@ -11,7 +12,9 @@ class HotelController extends Controller
     {
         // Retrieve all hotels
         $hotels = Hotel::all();
-        return view('hotels.index', compact('hotels'));
+        $favoriteHotels = Favorite::where('user_id', auth()->id())->pluck('hotel_id')->toArray();
+
+        return view('hotels.index', compact('hotels', 'favoriteHotels'));
     }
 
     public function search(Request $request)

@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\HotelController;
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,3 +21,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
+Route::get('/hotels/search', [HotelController::class, 'search'])->name('hotels.search');
+

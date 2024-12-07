@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('hotels.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Book a hotel') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('complaint.create')" :active="request()->routeIs('complaint.create')">
                         {{ __('File a Complaint') }}
                     </x-nav-link>

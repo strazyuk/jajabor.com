@@ -15,10 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('hotels.index')" :active="request()->routeIs('dashboard')">
-                        {{ __('Book a hotel') }}
+                    <x-nav-link :href="route('complaint.create')" :active="request()->routeIs('complaint.create')">
+                        {{ __('File a Complaint') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('flights.index')" :active="request()->routeIs('flights.index')">
+                        {{ __('Go to Flights') }}
                     </x-nav-link>
                 </div>
             </div>

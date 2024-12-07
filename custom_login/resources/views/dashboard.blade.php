@@ -5,13 +5,16 @@
         </h2>
     </x-slot>
 
-    <div style="padding: 30px; background-color: #f4f4f4;">
-        <div style="max-width: 800px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-            <div style="text-align: center; margin-bottom: 20px; color: #333;">
-                {{ __("You're logged in!") }}
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    {{ __("You're logged in!") }}
+                </div>
             </div>
 
           
         </div>
     </div>
 </x-app-layout>
+

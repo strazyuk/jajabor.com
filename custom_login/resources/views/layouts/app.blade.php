@@ -10,6 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="{{ asset('css/complaints.css') }}" rel="stylesheet">
 
     <!-- Custom Twitter-like Styles -->
     <style>
@@ -134,8 +135,12 @@
             </header>
         @endisset
 
+<<<<<<< HEAD
         <!-- Page Content -->
         <main class="py-6 px-4 sm:px-6 lg:px-8">
+=======
+
+>>>>>>> e5eb255cef9513f7604de7de0bd86a805cdfa2bf
 
             @if(View::hasSection('content'))
         @yield('content')

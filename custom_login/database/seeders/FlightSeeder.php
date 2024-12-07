@@ -26,6 +26,7 @@ class FlightSeeder extends Seeder
             'departure_time' => now()->addDays(3),
             'arrival_time' => now()->addDays(3)->addHours(4),
             'price' => 200.75,
+            'available_seats' => 100,
             'is_available' => true,
         ]);
     }

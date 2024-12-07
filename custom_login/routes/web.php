@@ -2,9 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FlightController;
-use App\Http\Controllers\ComplaintController;
-
-use App\Http\Controllers\HotelController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

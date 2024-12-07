@@ -1,20 +1,29 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FlightController;
 use Illuminate\Support\Facades\Route;
 
+// Welcome Route
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Dashboard Route (requires authentication)
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard'); // Replace with the correct view for the dashboard
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Authenticated Routes
+    // Profile Routes
+    Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::match(['put', 'post'], 'profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-require __DIR__.'/auth.php';
+    // Flight Routes
+    Route::get('/flights', [FlightController::class, 'index'])->name('flights.index');
+    Route::get('/flights/{flight}', [FlightController::class, 'show'])->name('flights.show');
+
+
+// Include Auth Routes (login, register, etc.)
+require __DIR__ . '/auth.php';

@@ -9,20 +9,20 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up()   
     {
-        Schema::create('favorites', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('hotel_id');
-            $table->timestamps();
-    
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
-        });
+        if (!Schema::hasTable('favorites')) {
+            Schema::create('favorites', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('user_id');
+                $table->unsignedBigInteger('hotel_id');
+                $table->timestamps();
+        
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+                $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
+            });
+        }
     }
-    
-
     /**
      * Reverse the migrations.
      */

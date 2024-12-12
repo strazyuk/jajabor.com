@@ -5,16 +5,18 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FavoriteController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+// Authentication Routes
+Auth::routes();
 
 // Favorites Routes
 Route::delete('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 
 // Welcome and Dashboard
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FlightController::class, 'index'])->name('home');   // Show the flight search form on the homepage
 
 Route::get('/dashboard', function () {
     return view('dashboard'); // Replace with the correct view for the dashboard
@@ -38,9 +40,12 @@ Route::middleware('auth')->group(function () {
     // Flight Purchase Routes
     Route::get('/flights/{flight}/buy', [FlightController::class, 'buy'])->name('flights.buy');
     Route::post('/flights/{flight}/complete-purchase', [FlightController::class, 'completePurchase'])->name('flights.completePurchase');
+
+    // Flight Search Routes
+    Route::post('/search', [FlightController::class, 'search'])->name('flights.search');
+    
 });
 
 // Hotel Routes
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
 Route::get('/hotels/search', [HotelController::class, 'search'])->name('hotels.search');
-

@@ -18,9 +18,11 @@ Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('f
 // Welcome and Dashboard
 Route::get('/', [FlightController::class, 'index'])->name('home');   // Show the flight search form on the homepage
 
-Route::get('/dashboard', function () {
-    return view('dashboard'); // Replace with the correct view for the dashboard
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Add other protected routes here
+});
+
 
 // Authenticated Routes
 Route::middleware('auth')->group(function () {

@@ -31,7 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/complaint', [ComplaintController::class, 'create'])->name('complaint.create');
     Route::post('/complaint', [ComplaintController::class, 'store'])->name('complaint.store');
 });
-    
+
+// Route for handling the Buy action
+Route::get('/flights/{flight}/buy', [FlightController::class, 'buy'])->name('flights.buy');
+Route::post('/flights/{flight}/complete-purchase', [FlightController::class, 'completePurchase'])->name('flights.completePurchase');
+
 
 // Include Auth Routes (login, register, etc.)
 require __DIR__ . '/auth.php';

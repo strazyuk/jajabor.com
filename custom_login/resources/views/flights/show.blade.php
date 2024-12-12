@@ -50,7 +50,7 @@
                 </a>
 
                 <!-- Buy Button -->
-                <a href="{{ route('flights.index') }}" class="bg-green-500 text-white py-2 px-6 rounded-full hover:bg-green-600 transition-colors">
+                <a href="{{ route('flights.buy',$flight->id) }}" class="bg-green-500 text-white py-2 px-6 rounded-full hover:bg-green-600 transition-colors">
                     Buy Now
                 </a>
             </div>

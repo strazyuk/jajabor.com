@@ -1,11 +1,14 @@
 <?php
 
+
 namespace App\Http\Controllers;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+
 
 class ProfileController extends Controller
 {
@@ -17,6 +20,7 @@ class ProfileController extends Controller
         $user = Auth::user(); // Get the currently logged-in user
         return view('profile.edit', compact('user')); // Return the edit view with user data
     }
+
 
     /**
      * Update the user's profile information.
@@ -31,11 +35,14 @@ class ProfileController extends Controller
             'password' => 'nullable|string|min:6|confirmed', // Optional password change
         ]);
 
+
         $user = Auth::user(); // Get the authenticated user
+
 
         // Update name and email
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+
 
         // Handle profile image upload if provided
         if ($request->hasFile('profile_image')) {
@@ -44,21 +51,26 @@ class ProfileController extends Controller
                 Storage::disk('public')->delete($user->profile_image);
             }
 
+
             // Store the new profile image
             $imagePath = $request->file('profile_image')->store('profile_images', 'public');
             $user->profile_image = $imagePath;
         }
+
 
         // Update password if provided
         if ($request->filled('password')) {
             $user->password = bcrypt($request->input('password'));
         }
 
+
         // Save the changes
         $user->save();
 
+
         return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
     }
+
 
     /**
      * Delete the user's account.
@@ -70,9 +82,12 @@ class ProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
+
         $user = Auth::user(); // Get the authenticated user
 
+
         Auth::logout(); // Log out the user
+
 
         // Delete the user and their profile image (if any)
         if ($user->profile_image) {
@@ -80,8 +95,10 @@ class ProfileController extends Controller
         }
         $user->delete();
 
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
 
         return redirect('/')->with('status', 'Your account has been deleted.');
     }

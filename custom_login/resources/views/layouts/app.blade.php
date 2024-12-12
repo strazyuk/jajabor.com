@@ -147,9 +147,14 @@
         @endif
 
 
-       
 
-            @yield('content')
+
+            @if(View::hasSection('content'))
+        @yield('content')
+    @else
+        {{ $slot ?? '' }}
+    @endif
+
         </main>
     </div>
 </body>

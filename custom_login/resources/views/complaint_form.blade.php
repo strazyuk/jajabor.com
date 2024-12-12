@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-5 d-flex justify-content-center">
+<div class="container-fluid d-flex justify-content-center align-items-center min-vh-100">
     <div class="row justify-content-center w-100">
         <div class="col-md-8">
             <div class="card shadow-lg border-0">
@@ -21,6 +21,7 @@
                                 class="rounded-pill shadow-sm p-3 w-75 mx-auto" 
                                 placeholder="Enter your email" 
                                 required />
+                            </div>
                         </div>
                         <div class="mb-4 text-center">
                             <x-form-label for="complaint" class="fw-bold">Your Complaint</x-form-label>
@@ -32,11 +33,8 @@
                                 class="form-control shadow-sm p-3 w-75 mx-auto custom-textarea" 
                                 placeholder="Write your complaint here..." 
                                 required></textarea>
-
                             </div>
                         </div>
-
-
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm">
                                 Submit
@@ -48,6 +46,4 @@
         </div>
     </div>
 </div>
-
-
 @endsection

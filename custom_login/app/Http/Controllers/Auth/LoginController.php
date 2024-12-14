@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;  // This now correctly refers to your own custom Controller
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -33,30 +34,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        // Ensure proper middleware application
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
-    }
-
-    /**
-     * Show the login form.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function showLoginForm()
-    {
-        return view('auth.login');
-    }
-
-    /**
-     * Log the user out.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function logout()
-    {
-        $this->guard()->logout();
-
-        return redirect('/');
     }
 }

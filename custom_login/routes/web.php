@@ -7,6 +7,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -67,6 +68,9 @@ Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('f
 // Hotel Routes
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index'); // Show hotels
 Route::get('/hotels/search', [HotelController::class, 'search'])->name('hotels.search'); // Search for hotels
+
+//location
+Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
 
 
 // Auth Routes

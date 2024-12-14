@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('flights.index')" :active="request()->routeIs('flights.index')">
                         {{ __('Go to Flights') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('locations.index')" :active="request()->routeIs('locations.index')">
+                        {{ __('Explore Locations') }}
+                    </x-nav-link>
                 </div>
             </div>
 

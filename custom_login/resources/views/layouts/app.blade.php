@@ -16,7 +16,10 @@
     <style>
         body {
             font-family: 'Figtree', sans-serif;
-            background-color: #F5F8FA; /* Light background like Twitter */
+            background-image: url('https://www.nwslc.ac.uk/wp-content/uploads/hand-holding-loupe-traveller-table-scaled-e1681808146477.jpg');
+            background-size: cover; /* Ensures the image covers the whole background */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+            background-attachment: fixed; /* Keeps the background fixed while scrolling */
             color: #14171A; /* Dark text */
             margin: 0;
             padding: 0;

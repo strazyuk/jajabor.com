@@ -1,7 +1,5 @@
 <?php
 
-// app/Models/Booking.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,10 +9,20 @@ class Booking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['flight_id', 'customer_name', 'customer_email'];
+    protected $table = 'bookings';
 
+    protected $fillable = ['flight_name', 'user_name', 'status'];
+
+    // Default attributes
+    protected $attributes = [
+        'status' => 'confirmed',
+    ];
+
+    /**
+     * Relationship to the Flight model.
+     */
     public function flight()
     {
-        return $this->belongsTo(Flight::class);
+        return $this->belongsTo(Flight::class, 'flight_name', 'flight_number');
     }
 }

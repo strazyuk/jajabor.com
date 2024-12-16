@@ -31,4 +31,69 @@ class FlightController extends Controller
         // Pass the flight to the view
         return view('flights.show', compact('flight'));
     }
+
+    /**
+     * Search for available flights based on user input.
+     */
+    public function search(Request $request)
+    {
+        // Validate user input
+        $request->validate([
+            'departure' => 'required|string',
+            'destination' => 'required|string',
+            'date' => 'required|date',
+        ]);
+
+        // Capture user input
+        $departure = $request->input('departure');
+        $destination = $request->input('destination');
+        $date = $request->input('date');
+
+        // Search flights based on departure, destination, and date
+        $flights = Flight::where('is_available', true)
+                         ->where('departure', 'like', "%$departure%")
+                         ->where('destination', 'like', "%$destination%")
+                         ->whereDate('departure_time', $date)
+                         ->get();
+
+        // Check if flights were found
+        if ($flights->isEmpty()) {
+            return back()->with('error', 'No flights found for the specified criteria.');
+        }
+
+        // Return the search results to the view
+        return view('flights.index', compact('flights'));
+    }
+
+    /**
+     * Handle the flight purchase.
+     */
+    public function buy(Flight $flight)
+    {
+        // Example functionality: Check availability and display a confirmation page
+        if ($flight->available_seats <= 0) {
+            return redirect()->route('flights.index')->with('error', 'No seats available for this flight.');
+        }
+
+        // Display the purchase confirmation page
+        return view('flights.buy', ['flight' => $flight]);
+    }
+
+    /**
+     * Complete the purchase process.
+     */
+    public function completePurchase(Flight $flight)
+    {
+        // Check availability again
+        if ($flight->available_seats <= 0) {
+            return redirect()->route('flights.index')->with('error', 'No seats available for this flight.');
+        }
+
+        // Simulate purchase logic (e.g., reduce seats, log purchase, etc.)
+        $flight->available_seats -= 1;
+        $flight->save();
+
+        // Redirect with success message
+        return redirect()->route('flights.index')->with('success', 'Purchase completed successfully!');
+    }
 }

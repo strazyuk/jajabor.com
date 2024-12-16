@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         // Call other seeders
         $this->call(HotelsTableSeeder::class);
         $this->call(FlightSeeder::class);
+        $this->call(LocationSeeder::class);
+
 
         // Check if the test user already exists
         if (!User::where('email', 'test@example.com')->exists()) {

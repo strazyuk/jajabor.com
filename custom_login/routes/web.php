@@ -6,9 +6,14 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FavoriteController;
 
+use App\Http\Controllers\HotelBookingController;
+
 use Illuminate\Support\Facades\Route;
 
 
+Route::post('/hotelbookings', [HotelBookingController::class, 'store'])->name('hotelbookings.store');
+
+Route::get('/hotelbookings/create/{id}', [HotelBookingController::class, 'create'])->name('hotelbookings.create');
 
 Route::delete('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 

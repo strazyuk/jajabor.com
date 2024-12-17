@@ -8,7 +8,7 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LocationController;
-
+use App\Http\Controllers\WeatherController;
 
 use App\Http\Controllers\HotelBookingController;
 
@@ -85,6 +85,9 @@ Route::get('/hotels/search', [HotelController::class, 'search'])->name('hotels.s
 
 //location
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
+
+//weather
+Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');
 
 
 // Auth Routes

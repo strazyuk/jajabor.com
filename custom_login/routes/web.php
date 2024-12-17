@@ -28,8 +28,7 @@ Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('f
 // Welcome page
 Route::get('/', function () {
     return view('welcome');
-});
-
+})->name('home');
 
 // Dashboard
 Route::get('/dashboard', function () {

@@ -88,5 +88,7 @@ Route::prefix('hotels')->group(function () {
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
 
 
+//weather
+Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');
 // Auth Routes
 require __DIR__ . '/auth.php';

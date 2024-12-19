@@ -1,6 +1,4 @@
 <?php
-
-
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\HotelController;
@@ -10,69 +8,56 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
-
-// Welcome page
+// Welcome Page
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 // Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
     // Profile Routes
-    Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::match(['PUT', 'POST'], 'profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    Route::prefix('profile')->group(function () {
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::match(['PUT', 'POST'], '/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
 
     // Flight Routes
-
-
-        // Booking Routes
-        Route::get('/flights/history', [BookingController::class, 'history'])->name('booking.history'); // View booking history
-        Route::post('/flights/confirm/{flight}', [BookingController::class, 'confirm'])->name('flights.confirm'); // Confirm booking
-        Route::post('/flights/cancel/{id}', [BookingController::class, 'cancel'])->name('flights.cancel'); // Cancel booking
-   
-        // Flight Routes
-        Route::get('/flights', [FlightController::class, 'index'])->name('flights.index'); // List all flights
-        Route::get('/flights/{flight}', [FlightController::class, 'show'])->name('flights.show'); // Flight details
+    Route::prefix('flights')->group(function () {
+        Route::get('/', [FlightController::class, 'index'])->name('flights.index');
+        Route::get('/{flight}', [FlightController::class, 'show'])->name('flights.show');
         
-        //asir
-        Route::get('/flights/{flight}/buy', [FlightController::class, 'buy'])->name('flights.buy');
-        Route::post('/flights/{flight}/complete-purchase', [FlightController::class, 'completePurchase'])->name('flights.completePurchase');
-    
-        // Flight Search Routes
-        Route::post('/search', [FlightController::class, 'search'])->name('flights.search');
+        Route::get('/{flight}/buy', [FlightController::class, 'buy'])->name('flights.buy');
+        Route::post('/{flight}/complete-purchase', [FlightController::class, 'completePurchase'])->name('flights.completePurchase');
+        Route::post('/confirm/{flight}', [BookingController::class, 'confirm'])->name('flights.confirm');
+        Route::post('/cancel/{id}', [BookingController::class, 'cancel'])->name('flights.cancel');
+        Route::get('/history', [BookingController::class, 'history'])->name('booking.history');
+    });
 
-
-
-
-
+    // Flight Search
+    Route::post('/search', [FlightController::class, 'search'])->name('flights.search');
 
     // Complaint Routes
     Route::get('/complaint', [ComplaintController::class, 'create'])->name('complaint.create');
     Route::post('/complaint', [ComplaintController::class, 'store'])->name('complaint.store');
 });
 
-
 // Favorites Routes
 Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 
-
 // Hotel Routes
-Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index'); // Show hotels
-Route::get('/hotels/search', [HotelController::class, 'search'])->name('hotels.search'); // Search for hotels
+Route::prefix('hotels')->group(function () {
+    Route::get('/', [HotelController::class, 'index'])->name('hotels.index');
+    Route::get('/search', [HotelController::class, 'search'])->name('hotels.search');
+});
 
-//location
+// Location Routes
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
-
 
 // Auth Routes
 require __DIR__ . '/auth.php';
-

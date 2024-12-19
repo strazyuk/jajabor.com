@@ -16,7 +16,7 @@ use App\Http\Controllers\HotelBookingController;
 use App\Http\Controllers\PaymentController; // Import PaymentController
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\LoginController;
 
 Route::post('/hotelbookings', [HotelBookingController::class, 'store'])->name('hotelbookings.store');
 
@@ -91,10 +91,11 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //weather
 Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');
-<<<<<<< HEAD
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-=======
->>>>>>> 4bfb21637b8602ff9855b42b6e943a9f24c9ec99
+
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
 // Auth Routes
 require __DIR__ . '/auth.php';

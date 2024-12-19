@@ -5,6 +5,7 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FavoriteController;
+use app\Http\Controllers\HomeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LocationController;
 
@@ -86,7 +87,7 @@ Route::prefix('hotels')->group(function () {
 
 // Location Routes
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
-
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //weather
 Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');

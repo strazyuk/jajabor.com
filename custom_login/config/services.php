@@ -13,6 +13,9 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
+    'weather' => [
+        'api_key' => env('WEATHER_API_KEY'),
+    ],
 
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
@@ -34,5 +37,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'stripe' => [
+    'public' => env('STRIPE_KEY'),
+    'secret' => env('STRIPE_SECRET'),
+],
+
 
 ];

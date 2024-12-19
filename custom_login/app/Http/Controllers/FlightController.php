@@ -61,8 +61,8 @@ class FlightController extends Controller
             return back()->with('error', 'No flights found for the specified criteria.');
         }
 
-        // Return the search results to the view
-        return view('flights.index', compact('flights'));
+        // Return the search results to the new results view
+        return view('flights.results', compact('flights'));
     }
 
     /**
@@ -75,7 +75,7 @@ class FlightController extends Controller
             return redirect()->route('flights.index')->with('error', 'No seats available for this flight.');
         }
 
-        // Display the purchase confirmation page
+        // Display the purchase confirmation page for the selected flight
         return view('flights.buy', ['flight' => $flight]);
     }
 

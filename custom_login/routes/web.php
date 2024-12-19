@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\HotelController;
@@ -6,12 +7,30 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LocationController;
+
+use App\Http\Controllers\WeatherController;
+
+use App\Http\Controllers\HotelBookingController;
+
+use App\Http\Controllers\PaymentController; // Import PaymentController
+
 use Illuminate\Support\Facades\Route;
+
+
+Route::post('/hotelbookings', [HotelBookingController::class, 'store'])->name('hotelbookings.store');
+
+Route::get('/hotelbookings/create/{id}', [HotelBookingController::class, 'create'])->name('hotelbookings.create');
+
+Route::delete('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+
+Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+
 
 // Welcome Page
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 // Dashboard
 Route::get('/dashboard', function () {
@@ -34,6 +53,7 @@ Route::middleware('auth')->group(function () {
         
         Route::get('/{flight}/buy', [FlightController::class, 'buy'])->name('flights.buy');
         Route::post('/{flight}/complete-purchase', [FlightController::class, 'completePurchase'])->name('flights.completePurchase');
+
         Route::post('/confirm/{flight}', [BookingController::class, 'confirm'])->name('flights.confirm');
         Route::post('/cancel/{id}', [BookingController::class, 'cancel'])->name('flights.cancel');
         Route::get('/history', [BookingController::class, 'history'])->name('booking.history');
@@ -41,6 +61,14 @@ Route::middleware('auth')->group(function () {
 
     // Flight Search
     Route::post('/search', [FlightController::class, 'search'])->name('flights.search');
+
+    // Stripe Payment Routes
+    Route::prefix('payment')->group(function () {
+        Route::get('/checkout/{flight}', [PaymentController::class, 'showPaymentPage'])->name('payment.checkout');
+        Route::post('/checkout/{flight}', [PaymentController::class, 'createCheckoutSession'])->name('payment.createCheckoutSession');
+        Route::get('/success/{flight}', [PaymentController::class, 'success'])->name('payment.success');
+        Route::get('/cancel/{flight}', [PaymentController::class, 'cancel'])->name('payment.cancel');
+    });
 
     // Complaint Routes
     Route::get('/complaint', [ComplaintController::class, 'create'])->name('complaint.create');
@@ -58,6 +86,7 @@ Route::prefix('hotels')->group(function () {
 
 // Location Routes
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
+
 
 // Auth Routes
 require __DIR__ . '/auth.php';

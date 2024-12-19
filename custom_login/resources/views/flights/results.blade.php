@@ -1,35 +1,87 @@
-<!-- resources/views/flights/results.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for card-like design and animations */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-header {
+            margin-bottom: 16px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .btn-hover:hover {
+            background-color: #4f8a10;
+            transform: scale(1.05);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-click:active {
+            transform: scale(0.95);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s ease-in-out;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100 font-sans antialiased">
 
-<h1>Available Flights</h1>
+    <div class="container mx-auto p-8">
+        <!-- Page Title -->
+        <h1 class="text-3xl font-bold text-center text-gray-900 mb-8">Available Flights</h1>
 
-@if(count($flights) > 0)
-    <ul>
-        @foreach($flights as $flight)
-            <li>
-                <strong>Airline:</strong> {{ $flight->airline }}<br>
-                <strong>Price:</strong> ${{ $flight->price }}<br>
-                <strong>Duration:</strong> {{ $flight->duration }}<br>
-                <strong>Departure Date:</strong> {{ $flight->departure_date }}<br>
-                <strong>Seats Available:</strong> {{ $flight->available_seats }}<br>
+        <!-- Check if flights are available -->
+        @if(count($flights) > 0)
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach($flights as $flight)
+                    <div class="card">
+                        <div class="card-content p-6">
+                            <!-- Card Header -->
+                            <div class="card-header">
+                                <h3 class="text-xl font-semibold text-gray-800">{{ $flight->airline }}</h3>
+                            </div>
 
-                <!-- Booking Button -->
-                <form action="{{ route('flights.buy', $flight) }}" method="GET">
-                    <button type="submit">Book Now</button>
-                </form>
-            </li>
-        @endforeach
-    </ul>
-@else
-    <p>No flights found.</p>
-@endif
+                            <!-- Card Body -->
+                            <p class="text-sm text-gray-600"><strong>Departure:</strong> {{ $flight->departure_date }}</p>
+                            <p class="text-sm text-gray-600"><strong>Price:</strong> ${{ number_format($flight->price, 2) }}</p>
+                            <p class="text-sm text-gray-600"><strong>Duration:</strong> {{ $flight->duration }}</p>
+                            <p class="text-sm text-gray-600"><strong>Seats Available:</strong> {{ $flight->available_seats }}</p>
+
+                            <!-- Book Now Button -->
+                            <div class="mt-6">
+                                <form action="{{ route('flights.buy', $flight) }}" method="GET">
+                                    <button type="submit" class="btn-hover w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300 focus:outline-none btn-click">
+                                        Book Now
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p class="text-center text-gray-500">No flights found matching your search criteria.</p>
+        @endif
+    </div>
 
 </body>
 </html>

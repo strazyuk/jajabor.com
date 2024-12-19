@@ -87,7 +87,7 @@ Route::prefix('hotels')->group(function () {
 // Location Routes
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
 
-
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 //weather
 Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');
 // Auth Routes

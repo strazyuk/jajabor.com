@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+06:56 PMimport { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({

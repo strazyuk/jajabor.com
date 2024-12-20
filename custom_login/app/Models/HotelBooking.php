@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class HotelBooking extends Model
 {
     protected $fillable = [
-        'user_id', 'hotel_id', 'check_in_date', 'check_out_date', 'number_of_guests',
+        'user_id', 'hotel_id', 'check_in_date', 'check_out_date', 'number_of_guests', 'bedroom_type'
     ];
 
     public function user()
@@ -20,4 +20,3 @@ class HotelBooking extends Model
         return $this->belongsTo(Hotel::class);
     }
 }
-

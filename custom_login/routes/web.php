@@ -1,6 +1,8 @@
 <?php
 
 
+
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\HotelController;
@@ -12,16 +14,30 @@ use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\HotelBookingController;
 
+
 use Illuminate\Support\Facades\Route;
 
 
-Route::post('/hotelbookings', [HotelBookingController::class, 'store'])->name('hotelbookings.store');
 
+
+Route::post('/hotelbookings', [HotelBookingController::class, 'store'])->name('hotelbookings.store');
 Route::get('/hotelbookings/create/{id}', [HotelBookingController::class, 'create'])->name('hotelbookings.create');
+
+
+//history
+Route::get('/history', [HotelBookingController::class, 'history'])->name('history.index');
+Route::delete('/hotelbookings/{id}/cancel', [HotelBookingController::class, 'cancel'])->name('hotelbookings.cancel');
+
+
+
 
 Route::delete('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 
+
 Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+
+
+
 
 
 
@@ -30,10 +46,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+
 // Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 
 // Authenticated Routes
@@ -44,7 +63,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
+
+
     // Flight Routes
+
+
 
 
         // Booking Routes
@@ -55,13 +78,19 @@ Route::middleware('auth')->group(function () {
         // Flight Routes
         Route::get('/flights', [FlightController::class, 'index'])->name('flights.index'); // List all flights
         Route::get('/flights/{flight}', [FlightController::class, 'show'])->name('flights.show'); // Flight details
-        
+       
         //asir
         Route::get('/flights/{flight}/buy', [FlightController::class, 'buy'])->name('flights.buy');
         Route::post('/flights/{flight}/complete-purchase', [FlightController::class, 'completePurchase'])->name('flights.completePurchase');
-    
+   
         // Flight Search Routes
         Route::post('/search', [FlightController::class, 'search'])->name('flights.search');
+
+
+
+
+
+
 
 
 
@@ -74,27 +103,36 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
+
 // Favorites Routes
 Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+
+
 
 
 // Hotel Routes
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index'); // Show hotels
 Route::get('/hotels/search', [HotelController::class, 'search'])->name('hotels.search'); // Search for hotels
 
+
 //location
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
 Route::get('/locations/{id}', [LocationController::class, 'show'])->name('locations.show');
 
+
 //weather
 Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');
 
+
 //reviews
+
 
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 
+
+
 // Auth Routes
 require __DIR__ . '/auth.php';
-

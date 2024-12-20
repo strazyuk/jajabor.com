@@ -9,8 +9,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\WeatherController;
-
-use App\Http\Controllers\HotelBookingController;
+use App\Http\Controllers\ReviewController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -88,6 +87,11 @@ Route::get('/locations/{id}', [LocationController::class, 'show'])->name('locati
 
 //weather
 Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');
+
+//reviews
+
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 
 // Auth Routes

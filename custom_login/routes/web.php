@@ -84,6 +84,7 @@ Route::get('/hotels/search', [HotelController::class, 'search'])->name('hotels.s
 
 //location
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
+Route::get('/locations/{id}', [LocationController::class, 'show'])->name('locations.show');
 
 //weather
 Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');

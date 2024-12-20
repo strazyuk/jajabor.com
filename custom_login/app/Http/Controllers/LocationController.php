@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\Location;
 class LocationController extends Controller
@@ -57,6 +57,29 @@ class LocationController extends Controller
             ['name' => 'Paris', 'address' => 'France', 'description' => 'Eiffel Tower, Louvre Museum, etc.'],
             ['name' => 'Rome', 'address' => 'Italy', 'description' => 'Colosseum, Vatican City, etc.'],
         ];
+    }
+    public function show($id)
+    {
+        // Fetch location from database
+        $location = Location::findOrFail($id);
+
+        // Fetch additional details from Wikipedia
+        $wikipediaUrl = 'https://en.wikipedia.org/w/api.php';
+        $response = Http::get($wikipediaUrl, [
+            'action' => 'query',
+            'prop' => 'extracts',
+            'format' => 'json',
+            'titles' => $location->name,
+            'exintro' => true,
+            'explaintext' => true,
+        ]);
+
+        // Parse the Wikipedia response
+        $page = collect($response->json()['query']['pages'])->first();
+        $wikiExtract = $page['extract'] ?? 'No additional information available.';
+
+        // Pass data to the view
+        return view('locations.show', compact('location', 'wikiExtract'));
     }
     
 }

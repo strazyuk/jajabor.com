@@ -24,12 +24,15 @@
     <!-- Locations List -->
     @if ($locations)
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        @foreach ($locations as $location)
+    
+    @foreach ($locations as $location)
+        <a href="{{ route('locations.show', $location->id) }}">
             <div class="p-4 border border-gray-300 rounded-lg">
                 <h2 class="text-xl font-semibold">{{ $location['name'] }}</h2>
                 <p class="text-gray-600">{{ $location['description'] }}</p>
             </div>
-        @endforeach
+            </a>
+    @endforeach
     </div>
 @else
     <p>No locations found.</p>

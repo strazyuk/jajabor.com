@@ -10,6 +10,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\HotelBookingController;
 
 use Illuminate\Support\Facades\Route;
 

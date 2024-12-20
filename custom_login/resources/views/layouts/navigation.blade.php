@@ -33,6 +33,10 @@
                     <x-nav-link :href="route('reviews.index')" :active="request()->routeIs('reviews.index')">
                         {{ __('Reviews') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('history.index')" :active="request()->routeIs('history.index')">
+                        {{ __('History') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 

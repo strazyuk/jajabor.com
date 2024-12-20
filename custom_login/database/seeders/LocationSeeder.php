@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -9,65 +8,27 @@ class LocationSeeder extends Seeder
 {
     public function run()
     {
-        // Add 10 dummy locations to the locations table
         Location::create([
             'name' => 'New York',
             'address' => 'New York, USA',
             'description' => 'The city that never sleeps.',
+            'image_url' => 'https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg',
         ]);
 
         Location::create([
             'name' => 'Los Angeles',
             'address' => 'California, USA',
             'description' => 'Known for Hollywood and its beaches.',
+            'image_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/20190616154621%21Echo_Park_Lake_with_Downtown_Los_Angeles_Skyline.jpg/800px-20190616154621%21Echo_Park_Lake_with_Downtown_Los_Angeles_Skyline.jpg',
         ]);
 
         Location::create([
             'name' => 'Tokyo',
             'address' => 'Tokyo, Japan',
             'description' => 'A bustling metropolis known for technology and culture.',
+            'image_url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOQmNpxrD9ccoxZ3Q23LOOE93wLr_tMR7LFQ&s',
         ]);
 
-        Location::create([
-            'name' => 'Paris',
-            'address' => 'Paris, France',
-            'description' => 'Home of the Eiffel Tower and rich history.',
-        ]);
-
-        Location::create([
-            'name' => 'London',
-            'address' => 'London, UK',
-            'description' => 'Famous for Big Ben and the British Museum.',
-        ]);
-
-        Location::create([
-            'name' => 'Rome',
-            'address' => 'Rome, Italy',
-            'description' => 'Rich in history, home of the Colosseum.',
-        ]);
-
-        Location::create([
-            'name' => 'Sydney',
-            'address' => 'Sydney, Australia',
-            'description' => 'Famous for its Opera House and beautiful beaches.',
-        ]);
-
-        Location::create([
-            'name' => 'Berlin',
-            'address' => 'Berlin, Germany',
-            'description' => 'Known for its modern history and the Berlin Wall.',
-        ]);
-
-        Location::create([
-            'name' => 'Cape Town',
-            'address' => 'Cape Town, South Africa',
-            'description' => 'A city with beautiful beaches and mountains.',
-        ]);
-
-        Location::create([
-            'name' => 'Dubai',
-            'address' => 'Dubai, UAE',
-            'description' => 'Known for its luxurious shopping and skyscrapers.',
-        ]);
+        // Add more dummy locations...
     }
 }

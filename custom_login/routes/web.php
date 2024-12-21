@@ -13,10 +13,10 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\HotelBookingController;
-
+use App\Http\Controllers\FAQController;
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\DashboardController;
 
 
 
@@ -131,6 +131,10 @@ Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::get('/faq', [FAQController::class, 'index'])->name('faq');
 
 
 

@@ -15,7 +15,7 @@ class CreateHotelBookingsTable extends Migration
             $table->date('check_in_date');
             $table->date('check_out_date');
             $table->integer('number_of_guests');
-            $table->string('bedroom_type'); // Add bedroom_type column
+            $table->string('bedroom_type')->nullable()->comment('Type of bedroom');
             $table->timestamps();
 
             // Foreign keys (optional)

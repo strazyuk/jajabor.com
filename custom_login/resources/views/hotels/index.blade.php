@@ -113,6 +113,13 @@
             color: #555;
         }
 
+        .hotel-card .price {
+            font-size: 18px;
+            color: #4CAF50;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
         .heart-button {
             font-size: 24px;
             color: gray;
@@ -176,6 +183,7 @@
                             <div class="hotel-card">
                                 <h4>{{ $hotel->name }}</h4>
                                 <p><strong>Location:</strong> {{ $hotel->location }}</p>
+                                <p class="price">${{ number_format($hotel->price, 2) }}</p> <!-- Display price -->
                                 <form action="{{ route('favorites.toggle') }}" method="POST" style="display: inline;">
                                     @csrf
                                     <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">
@@ -197,6 +205,7 @@
                         <div class="hotel-card">
                             <h4>{{ $hotel->name }}</h4>
                             <p><strong>Location:</strong> {{ $hotel->location }}</p>
+                            <p class="price">${{ number_format($hotel->price, 2) }}</p> <!-- Display price -->
                             <form action="{{ route('favorites.toggle') }}" method="POST" style="display: inline;">
                                 @csrf
                                 <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">

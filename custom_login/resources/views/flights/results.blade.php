@@ -6,7 +6,6 @@
     <title>Search Results</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Custom CSS for card-like design and animations */
         .card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-radius: 15px;
@@ -17,17 +16,6 @@
         .card:hover {
             transform: translateY(-8px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-content {
-            padding: 20px;
-        }
-
-        .card-header {
-            margin-bottom: 16px;
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: #333;
         }
 
         .btn-hover:hover {
@@ -61,10 +49,13 @@
                             </div>
 
                             <!-- Card Body -->
-                            <p class="text-sm text-gray-600"><strong>Departure:</strong> {{ $flight->departure_date }}</p>
-                            <p class="text-sm text-gray-600"><strong>Price:</strong> ${{ number_format($flight->price, 2) }}</p>
-                            <p class="text-sm text-gray-600"><strong>Duration:</strong> {{ $flight->duration }}</p>
-                            <p class="text-sm text-gray-600"><strong>Seats Available:</strong> {{ $flight->available_seats }}</p>
+                            <div class="mb-4">
+                                <p class="text-sm text-gray-600"><strong>Flight Number:</strong> {{ $flight->flight_number }}</p>
+                                <p class="text-sm text-gray-600"><strong>Departure:</strong> {{$flight->departure_time}}</p>
+                                <p class="text-sm text-gray-600"><strong>Price:</strong> ${{ number_format($flight->price, 2) }}</p>
+                                <p class="text-sm text-gray-600"><strong>Seats Available:</strong> {{ $flight->available_seats }}</p>
+                                <p class="text-sm text-gray-600"><strong>Total price :</strong> {{ $flight->price*$passengers}}</p>
+                            </div>
 
                             <!-- Book Now Button -->
                             <div class="mt-6">

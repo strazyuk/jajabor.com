@@ -5,7 +5,11 @@ use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use App\Models\Flight;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 class PaymentController extends Controller
+
 {
     /**
      * Show the payment page (using Stripe Checkout).
@@ -19,9 +23,18 @@ class PaymentController extends Controller
     /**
      * Create a Stripe Checkout session.
      */
-    public function createCheckoutSession($flightId)
+    public function createCheckoutSession($flightId, Request $request)
     {
         $flight = Flight::findOrFail($flightId);
+
+        // Validate and handle coupon and discounted price
+        $request->validate([
+            'discounted_price' => 'required|numeric|min:0',
+            'coupon_code' => 'nullable|string',
+        ]);
+
+        $discountedPrice = $request->input('discounted_price');
+        $couponCode = $request->input('coupon_code');
 
         // Set your secret key. Remember to switch to your live secret key in production.
         Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -36,7 +49,7 @@ class PaymentController extends Controller
                         'product_data' => [
                             'name' => "Flight to " . $flight->destination,
                         ],
-                        'unit_amount' => $flight->price * 100, // Amount in cents
+                        'unit_amount' => $discountedPrice * 100, // Amount in cents
                     ],
                     'quantity' => 1,
                 ],
@@ -53,15 +66,34 @@ class PaymentController extends Controller
     /**
      * Handle successful payment.
      */
-    public function success($flightId)
-    {
-        // Update flight status or perform any necessary logic (e.g., reducing seats)
-        $flight = Flight::findOrFail($flightId);
-        $flight->available_seats -= 1;
-        $flight->save();
+   public function success($flightId)
+{
+    // Update flight status or perform necessary logic
+    $passengers = session('passengers', 1);
+    $loggedInUserName = Auth::user()->name;
+    $flight = Flight::findOrFail($flightId);
+    $flight->available_seats -= $passengers;
+    $flight->save();
 
-        return view('payment.success', compact('flight'));
-    }
+    // Data for the receipt
+    $receiptData = [
+        'flight' => $flight,
+        'passenger_name' => $loggedInUserName, // Fetch the passenger's name dynamically
+        'amount_paid' => $flight->price, // Replace with actual paid price
+        'transaction_date' => now(),
+    ];
+
+    // Generate PDF receipt
+    $pdf = Pdf::loadView('payment.receipt', $receiptData);
+    $fileName = 'receipt_' . uniqid() . '.pdf';
+    $filePath = config('app.receipt.storage_path') . $fileName;
+
+    Storage::put($filePath, $pdf->output());
+
+
+    // Stream or download the PDF
+    return $pdf->download('receipt.pdf');
+}
 
     /**
      * Handle canceled payment.

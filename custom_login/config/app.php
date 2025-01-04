@@ -123,4 +123,24 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Receipt Configuration
+    |--------------------------------------------------------------------------
+    |
+    | These settings are used for generating and managing receipts, such as
+    | default file paths, formats, and related options.
+    |
+    */
+
+    'receipt' => [
+        'default_format' => env('RECEIPT_FORMAT', 'pdf'),
+        'storage_path' => env('RECEIPT_STORAGE_PATH', 'storage/receipts/'),
+        'email_receipts' => env('EMAIL_RECEIPTS', true), // Whether to send receipt via email
+        'pdf_options' => [
+            'paper_size' => env('RECEIPT_PAPER_SIZE', 'A4'),
+            'orientation' => env('RECEIPT_ORIENTATION', 'portrait'),
+        ],
+    ],
+
 ];

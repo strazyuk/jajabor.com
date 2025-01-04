@@ -10,17 +10,18 @@ class CreateHotelBookingsTable extends Migration
     {
         Schema::create('hotel_bookings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('hotel_id');
+            $table->unsignedBigInteger('user_id'); // Reference to the users table
+            $table->unsignedBigInteger('hotel_id'); // Reference to the hotels table
             $table->date('check_in_date');
             $table->date('check_out_date');
             $table->integer('number_of_guests');
             $table->string('bedroom_type')->nullable()->comment('Type of bedroom');
             $table->timestamps();
 
-            // Foreign keys (optional)
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
+            // Remove foreign key constraints for flexibility
+            // You may add indexes to improve query performance, if needed
+            $table->index('user_id');
+            $table->index('hotel_id');
         });
     }
 

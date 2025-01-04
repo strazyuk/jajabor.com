@@ -48,12 +48,15 @@ class FlightController extends Controller
         $departure = $request->input('departure');
         $destination = $request->input('destination');
         $date = $request->input('date');
+        $passengers = $request->input('travelers', 1);
+        session(['passengers' => $passengers]);
 
         // Search flights based on departure, destination, and date
         $flights = Flight::where('is_available', true)
                          ->where('departure', 'like', "%$departure%")
                          ->where('destination', 'like', "%$destination%")
                          ->whereDate('departure_time', $date)
+    
                          ->get();
 
         // Check if flights were found
@@ -62,21 +65,24 @@ class FlightController extends Controller
         }
 
         // Return the search results to the new results view
-        return view('flights.results', compact('flights'));
+        return view('flights.results', compact('flights', 'passengers'));
     }
 
     /**
      * Handle the flight purchase.
      */
     public function buy(Flight $flight)
+
     {
+        $passengers = session('passengers', 1);
+        
         // Example functionality: Check availability and display a confirmation page
         if ($flight->available_seats <= 0) {
             return redirect()->route('flights.index')->with('error', 'No seats available for this flight.');
         }
 
         // Display the purchase confirmation page for the selected flight
-        return view('flights.buy', ['flight' => $flight]);
+        return view('flights.buy',compact('flight', 'passengers'));
     }
 
     /**

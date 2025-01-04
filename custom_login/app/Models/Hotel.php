@@ -9,5 +9,9 @@ class Hotel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'location']; // Ensure these match your table columns
+    protected $fillable = ['name', 'location', 'latitude', 'longitude', 'images'];
+
+    protected $casts = [
+        'images' => 'array', // Automatically decode JSON to an array
+    ];
 }

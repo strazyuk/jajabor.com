@@ -8,14 +8,18 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FavoriteController;
+use app\Http\Controllers\HomeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\HotelBookingController;
 
+use App\Http\Controllers\PaymentController; 
+
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 
 
@@ -86,7 +90,13 @@ Route::middleware('auth')->group(function () {
         // Flight Search Routes
         Route::post('/search', [FlightController::class, 'search'])->name('flights.search');
 
-
+        // Stripe Payment Routes
+        Route::prefix('payment')->group(function () {
+        Route::get('/checkout/{flight}', [PaymentController::class, 'showPaymentPage'])->name('payment.checkout');
+        Route::post('/checkout/{flight}', [PaymentController::class, 'createCheckoutSession'])->name('payment.createCheckoutSession');
+        Route::get('/success/{flight}', [PaymentController::class, 'success'])->name('payment.success');
+        Route::get('/cancel/{flight}', [PaymentController::class, 'cancel'])->name('payment.cancel');
+    });
 
 
 
@@ -123,6 +133,13 @@ Route::get('/locations/{id}', [LocationController::class, 'show'])->name('locati
 
 //weather
 Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');
+
+
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 
 //reviews

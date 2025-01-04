@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Hotel name
-            $table->string('location'); // Hotel location
+            $table->string('name');        // Hotel name
+            $table->string('location');    // Hotel location
+            $table->decimal('latitude', 10, 8)->nullable();  // Latitude for the hotel
+            $table->decimal('longitude', 11, 8)->nullable(); // Longitude for the hotel
+            $table->json('images')->nullable();              // Store multiple image file paths as JSON
             $table->timestamps();
         });
     }

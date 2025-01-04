@@ -37,24 +37,17 @@ class HotelBookingController extends Controller
 
     // Show booking form for a specific hotel
     public function create($id)
-    {
-        $hotel = Hotel::findOrFail($id);
+{
+    $hotel = Hotel::findOrFail($id);
+
+    // Latitude and Longitude should already exist in the database
+    return view('hotelbookings.create', compact('hotel'));
+}
 
 
-        // Example: Adding coordinates to the hotel model (replace with real values)
-        $hotel->latitude = 23.8103; // Set hotel's latitude
-        $hotel->longitude = 90.4125; // Set hotel's longitude
-       
-        return view('hotelbookings.create', compact('hotel'));
-    }
 
 
-    // List hotels
-    public function index()
-    {
-        $hotels = Hotel::all();
-        return view('hotels.index', compact('hotels'));
-    }
+
 
 
     // Show booking history

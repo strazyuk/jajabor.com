@@ -1,6 +1,18 @@
 <h1>Your Hotel Bookings</h1>
 <ul>
-    @foreach($bookings as $booking)
-        <li>{{ $booking->hotel->name }} - {{ $booking->check_in_date }} to {{ $booking->check_out_date }}</li>
-    @endforeach
+@foreach ($hotels as $hotel)
+    <div>
+        <h2>{{ $hotel->name }}</h2>
+        <p>{{ $hotel->location }}</p>
+        <p>Latitude: {{ $hotel->latitude }}, Longitude: {{ $hotel->longitude }}</p>
+
+        <div style="display: flex; gap: 10px;">
+            @foreach (json_decode($hotel->images) as $image)
+                <img src="{{ asset($image) }}" alt="{{ $hotel->name }}" style="width: 150px; height: auto;">
+                
+            @endforeach
+        </div>
+    </div>
+@endforeach
+
 </ul>

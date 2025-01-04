@@ -6,6 +6,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\WeatherController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\HotelPaymentController;
 =======
 use App\Http\Controllers\HotelBookingController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\HotelPaymentController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\HotelPaymentController;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +51,22 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Public Hotel Routes
+Route::prefix('hotels')->group(function () {
+    Route::get('/', [HotelController::class, 'index'])->name('hotels.index');
+    Route::get('/search', [HotelController::class, 'search'])->name('hotels.search');
+    Route::get('/{hotel}/details', [HotelController::class, 'show'])->name('hotels.show');
+});
+
+// Weather Routes
+Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');
+
+// Location Routes
+Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
+
+// Home Route
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Public Hotel Routes
 Route::prefix('hotels')->group(function () {

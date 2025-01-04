@@ -10,7 +10,8 @@ class Hotel extends Model
     use HasFactory;
 
 <<<<<<< Updated upstream
-    protected $fillable = ['name', 'location', 'latitude', 'longitude', 'images'];
+    // Add all the fields to the fillable array for mass assignment
+    protected $fillable = ['name', 'location', 'latitude', 'longitude', 'images', 'price'];
 
     protected $casts = [
         'images' => 'array', // Automatically decode JSON to an array

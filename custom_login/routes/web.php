@@ -6,7 +6,6 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\WeatherController;
@@ -15,58 +14,26 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\HotelBookingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\HotelPaymentController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\FAQController;
+use Illuminate\Support\Facades\Route;
 =======
 use App\Http\Controllers\HotelBookingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\HotelPaymentController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\HotelPaymentController;
 use Illuminate\Support\Facades\Route;
->>>>>>> Stashed changes
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\FAQController;
-use Illuminate\Support\Facades\Route;
-
-<<<<<<< Updated upstream
-// Hotel Booking Routes
-Route::post('/hotelbookings', [HotelBookingController::class, 'store'])->name('hotelbookings.store');
-Route::get('/hotelbookings/create/{id}', [HotelBookingController::class, 'create'])->name('hotelbookings.create');
-Route::get('/history', [HotelBookingController::class, 'history'])->name('history.index');
-Route::delete('/hotelbookings/{id}/cancel', [HotelBookingController::class, 'cancel'])->name('hotelbookings.cancel');
+>>>>>>> Stashed changes
 
 // Welcome Page
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// Dashboard
-=======
-// Welcome Page
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Dashboard (Requires Authentication and Email Verification)
->>>>>>> Stashed changes
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Public Hotel Routes
-Route::prefix('hotels')->group(function () {
-    Route::get('/', [HotelController::class, 'index'])->name('hotels.index');
-    Route::get('/search', [HotelController::class, 'search'])->name('hotels.search');
-    Route::get('/{hotel}/details', [HotelController::class, 'show'])->name('hotels.show');
-});
-
-// Weather Routes
-Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');
-
-// Location Routes
-Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
-
-// Home Route
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Public Hotel Routes
 Route::prefix('hotels')->group(function () {
@@ -122,12 +89,12 @@ Route::middleware('auth')->group(function () {
     // Favorites Routes
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
     Route::delete('/favorites/toggle/{favorite}', [FavoriteController::class, 'destroy'])->name('favorites.delete');
-});
 
-// Hotel Routes
-Route::prefix('hotels')->group(function () {
-    Route::get('/', [HotelController::class, 'index'])->name('hotels.index');
-    Route::get('/search', [HotelController::class, 'search'])->name('hotels.search');
+    // Hotel Booking Routes
+    Route::post('/hotelbookings', [HotelBookingController::class, 'store'])->name('hotelbookings.store');
+    Route::get('/hotelbookings/create/{hotel}', [HotelBookingController::class, 'create'])->name('hotelbookings.create');
+    Route::get('/history', [HotelBookingController::class, 'history'])->name('history.index');
+    Route::delete('/hotelbookings/{id}/cancel', [HotelBookingController::class, 'cancel'])->name('hotelbookings.cancel');
 
     // Hotel Payment Routes
     Route::prefix('hotel/payment')->group(function () {
@@ -144,9 +111,6 @@ Route::prefix('hotels')->group(function () {
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
 Route::get('/locations/{id}', [LocationController::class, 'show'])->name('locations.show');
 
-// Weather Route
-Route::get('weather', [WeatherController::class, 'showWeather'])->name('weather.show');
-
 // Reviews Routes
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
@@ -154,12 +118,7 @@ Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store
 // FAQ Route
 Route::get('/faq', [FAQController::class, 'index'])->name('faq.index');
 
-// Home Route
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 // Login Route
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-
 =======
 
     // Hotel Booking Routes
@@ -181,8 +140,8 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
     });
 });
 
->>>>>>> Stashed changes
 // Auth Routes
+>>>>>>> Stashed changes
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 // Include additional authentication routes

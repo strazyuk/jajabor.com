@@ -22,6 +22,9 @@ return new class extends Migration
 =======
             $table->string('name'); // Hotel name
             $table->string('location'); // Hotel location
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             $table->decimal('price', 8, 2); // Add price column (8 digits in total, 2 after the decimal point)
             $table->timestamps();

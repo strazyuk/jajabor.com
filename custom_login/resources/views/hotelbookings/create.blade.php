@@ -5,9 +5,12 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<<<<<<< Updated upstream
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+=======
+>>>>>>> Stashed changes
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +49,11 @@
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         input, select {
+=======
+        input[type="date"], input[type="number"], select, input[type="text"] {
+>>>>>>> Stashed changes
 =======
         input[type="date"], input[type="number"], select, input[type="text"] {
 >>>>>>> Stashed changes
@@ -135,6 +142,9 @@
             color: #ff4c4c;
         }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     </style>
 </head>
@@ -185,6 +195,7 @@
 =======
 <!-- Booking Form -->
 <form id="bookingForm" action="{{ route('hotel.payment.createCheckoutSession', $hotel->id) }}" method="POST">
+<<<<<<< Updated upstream
 <form id="bookingForm" action="{{ route('hotel.payment.createCheckoutSession', $hotel->id) }}" method="POST">
     @csrf
     <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">
@@ -202,10 +213,25 @@
     <label for="number_of_guests">Number of Guests:</label>
     <input type="number" name="number_of_guests" id="number_of_guests" min="1" required>
 >>>>>>> Stashed changes
+=======
+    @csrf
+    <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">
+    <input type="hidden" name="total_price" id="total_price" value="">
+
+    <label for="check_in_date">Check-in Date:</label>
+    <input type="date" name="check_in_date" id="check_in_date" required>
+
+    <label for="check_out_date">Check-out Date:</label>
+    <input type="date" name="check_out_date" id="check_out_date" required>
+
+    <label for="number_of_guests">Number of Guests:</label>
+    <input type="number" name="number_of_guests" id="number_of_guests" min="1" required>
+>>>>>>> Stashed changes
 
         <label for="number_of_guests">Number of Guests:</label>
         <input type="number" name="number_of_guests" id="number_of_guests" min="1" required>
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         <label for="room_type">Room Type:</label>
         <select name="room_type" required>
@@ -213,6 +239,8 @@
             <option value="2-bedroom">2 Bedroom</option>
         </select>
 =======
+=======
+>>>>>>> Stashed changes
     <!-- Coupon Code -->
     <label for="coupon_code">Coupon Code (if any):</label>
     <input type="text" name="coupon_code" id="coupon_code" placeholder="Enter coupon code">
@@ -235,18 +263,26 @@
     <button type="submit" id="bookNowBtn">Book Now</button>
 </form>
 
+<<<<<<< Updated upstream
 
 <script>
     const hotelPrice = {{ $hotel->price }};
     const hotelPrice = {{ $hotel->price }};
+=======
+<script>
+    const hotelPrice = {{ $hotel->price }};
+>>>>>>> Stashed changes
     const hotelLat = {{ $hotel->latitude }};
     const hotelLon = {{ $hotel->longitude }};
     
     let finalPrice = hotelPrice;
 
+<<<<<<< Updated upstream
     
     let finalPrice = hotelPrice;
 
+=======
+>>>>>>> Stashed changes
     // Initialize the map
     const map = L.map('map').setView([hotelLat, hotelLon], 13);
 >>>>>>> Stashed changes
@@ -255,6 +291,7 @@
         <input type="text" name="coupon_code" id="coupon_code" placeholder="Enter coupon code">
         <button type="button" id="apply_coupon_button">Apply Coupon</button>
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         <div class="price">Original Price: ${{ number_format($hotel->price, 2) }} per night</div>
         <div class="discounted-price" id="discounted_price_display">Discounted Price: </div>
@@ -300,14 +337,19 @@
         calculateTotalPrice();
     </script>
 =======
+=======
+>>>>>>> Stashed changes
     // Add a marker with more detailed information
     L.marker([hotelLat, hotelLon]).addTo(map)
         .bindPopup('<b>{{ $hotel->name }}</b><br>' +
                   'Address: {{ $hotel->address }}<br>' + 
                   'Price: ${{ number_format($hotel->price, 2) }} per night')
+<<<<<<< Updated upstream
         .bindPopup('<b>{{ $hotel->name }}</b><br>' +
                   'Address: {{ $hotel->address }}<br>' + 
                   'Price: ${{ number_format($hotel->price, 2) }} per night')
+=======
+>>>>>>> Stashed changes
         .openPopup();
 
     // JavaScript function to calculate number of days, total price, and guests
@@ -374,6 +416,7 @@
 
         document.getElementById('bookingForm').submit();
     });
+<<<<<<< Updated upstream
 
     // JavaScript function to calculate number of days, total price, and guests
     function calculateTotalPrice() {
@@ -439,6 +482,10 @@
 
         document.getElementById('bookingForm').submit();
     });
+</script>
+
+>>>>>>> Stashed changes
+=======
 </script>
 
 >>>>>>> Stashed changes

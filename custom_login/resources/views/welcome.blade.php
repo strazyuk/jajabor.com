@@ -83,7 +83,7 @@
                     <a href="{{ route('register') }}">Register</a>
                     <a href="{{ route('login') }}">Log In</a>       
                 @endguest
-                <a href="{{ route('faq') }}">Faq</a>
+                <a href="{{ route('faq.index') }}">Faq</a>
                 <a href="#">About Us</a>
             </div>
         </div>

@@ -150,6 +150,8 @@ Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store
 
 
 
+use App\Http\Controllers\FAQController;
 
+Route::get('/faq', [FAQController::class, 'index'])->name('faq.index');
 // Auth Routes
 require __DIR__ . '/auth.php';

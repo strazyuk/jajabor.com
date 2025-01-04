@@ -8,6 +8,7 @@ class HotelsTableSeeder extends Seeder
 {
     public function run()
     {
+<<<<<<< Updated upstream
         // Create hotel entries with prices
         Hotel::create([
             'name' => 'Grand Hotel',
@@ -124,6 +125,15 @@ class HotelsTableSeeder extends Seeder
                 'images/blue_marine_resort3.jpg',
             ]),
             'price' => 250.00, // Price for Blue Marine Resort
+=======
+        DB::table('hotels')->insert([
+            ['name' => 'Hotel Sunshine', 'location' => "Cox's bazar", 'price' => 100],
+            ['name' => 'Ocean View Resort', 'location' => "Cox's bazar", 'price' => 200],
+            ['name' => 'Mountain Lodge', 'location' => "Cox's bazar", 'price' => 150],
+            ['name' => 'Seaview Lodge', 'location' => "Cox's bazar", 'price' => 180],
+            ['name' => 'Suite', 'location' => "Cox's bazar", 'price' => 250],
+            ['name' => 'Skyplane hotel', 'location' => "Cox's bazar", 'price' => 300],
+>>>>>>> Stashed changes
         ]);
     }
 }

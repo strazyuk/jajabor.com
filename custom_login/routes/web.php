@@ -15,8 +15,11 @@ use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\HotelBookingController;
 
+use App\Http\Controllers\PaymentController; 
+
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 
 
@@ -145,10 +148,6 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
-
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
-Route::get('/faq', [FAQController::class, 'index'])->name('faq');
 
 
 

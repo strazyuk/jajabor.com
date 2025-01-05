@@ -80,7 +80,7 @@
                                 <img src="{{ asset('images/maliha.jpg') }}" alt="Developer 4" class="w-full h-full object-cover">
                             </div>
                             <h4 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mt-4 mb-2 text-center">Shawana Maliha</h4>
-                            <p class="text-gray-700 dark:text-gray-300 text-lg">UI/UX Designer</p>
+                            <p class="text-gray-700 dark:text-gray-300 text-lg">Dudhbhat</p>
                         </div>
 
                     </div>

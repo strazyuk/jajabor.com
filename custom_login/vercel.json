@@ -8,9 +8,6 @@
             "use": "vercel-php@0.9.0"
         }
     ],
-    "env": {
-        "COMPOSER_INSTALL": "false"
-    },
     "routes": [
         {
             "handle": "filesystem"

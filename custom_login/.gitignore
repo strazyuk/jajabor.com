@@ -23,8 +23,7 @@
 # NPM
 /package-lock.json
 
-# Vite
-/public/build
+# /public/build - committed to Git so vercel-php lambda has access to manifest
 
 # IDE / OS files
 /.idea

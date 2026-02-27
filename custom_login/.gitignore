@@ -1,7 +1,7 @@
 # Laravel & Node .gitignore
 
 # Laravel
-/vendor
+# /vendor - committed for Vercel deployment (no Composer in Vercel build env)
 /node_modules
 /.env
 /.env.*
@@ -24,7 +24,7 @@
 /package-lock.json
 
 # Vite
-/public/build
+# /public/build - committed for Vercel deployment
 
 # IDE / OS files
 /.idea

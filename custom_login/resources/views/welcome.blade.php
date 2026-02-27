@@ -84,7 +84,7 @@
                     <a href="{{ route('login') }}">Log In</a>       
                 @endguest
                 <a href="{{ route('faq.index') }}">Faq</a>
-                <a href="#">About Us</a>
+                <a href="{{route('about.us')}}">About Us</a>
             </div>
         </div>
     </header>

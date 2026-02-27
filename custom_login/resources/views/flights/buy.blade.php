@@ -16,9 +16,9 @@
             let discountedPrice = originalPrice * passengers;
 
             // Validate coupon code and calculate discount
-            if (couponCode === 'DISCOUNT10') {
-                discountedPrice *= 0.9; // 10% off
-                feedbackElement.textContent = '10% discount applied!';
+            if (couponCode === 'RANASIRVALO50') {
+                discountedPrice *= 0.5; // 10% off
+                feedbackElement.textContent = '50% discount applied!-> Rana Sir onek bhalo';
                 feedbackElement.classList.add('text-green-500');
                 feedbackElement.classList.remove('text-red-500');
             } else if (couponCode === 'DISCOUNT20') {

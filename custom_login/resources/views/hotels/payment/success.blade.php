@@ -87,7 +87,7 @@
             <p><strong>Guests:</strong> {{ $hotelBooking->number_of_guests }}</p>
             <p><strong>Total Price:</strong> ${{ number_format($hotelBooking->total_price, 2) }}</p>
         </div>
-        <a href="{{ route('home') }}" class="action-button">Return to Homepage</a>
+        <a href="{{ route('dashboard') }}" class="action-button">Return to Homepage</a>
     </div>
 </body>
 </html>

@@ -9,7 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\WeatherController;
-<<<<<<< Updated upstream
+
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\HotelBookingController;
 use App\Http\Controllers\PaymentController;
@@ -17,23 +17,28 @@ use App\Http\Controllers\HotelPaymentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FAQController;
 use Illuminate\Support\Facades\Route;
-=======
-use App\Http\Controllers\HotelBookingController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\HotelPaymentController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
->>>>>>> Stashed changes
+
+
+
 
 // Welcome Page
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// Dashboard (Requires Authentication and Email Verification)
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+use App\Http\Controllers\DashboardController;
+// Dashboard
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+
+Route::get('/about-us', function () {
+    return view('about-us');
+})->name('about.us');
 
 // Public Hotel Routes
 Route::prefix('hotels')->group(function () {
@@ -64,11 +69,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/{flight}', [FlightController::class, 'show'])->name('flights.show');
         Route::get('/{flight}/buy', [FlightController::class, 'buy'])->name('flights.buy');
         Route::post('/{flight}/complete-purchase', [FlightController::class, 'completePurchase'])->name('flights.completePurchase');
-<<<<<<< Updated upstream
+
         Route::post('/search', [FlightController::class, 'search'])->name('flights.search');
         Route::get('/history', [BookingController::class, 'history'])->name('booking.history');
-=======
->>>>>>> Stashed changes
+
+
         Route::post('/confirm/{flight}', [BookingController::class, 'confirm'])->name('flights.confirm');
         Route::post('/cancel/{id}', [BookingController::class, 'cancel'])->name('flights.cancel');
     });
@@ -84,7 +89,7 @@ Route::middleware('auth')->group(function () {
     // Complaint Routes
     Route::get('/complaint', [ComplaintController::class, 'create'])->name('complaint.create');
     Route::post('/complaint', [ComplaintController::class, 'store'])->name('complaint.store');
-<<<<<<< Updated upstream
+
 
     // Favorites Routes
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
@@ -105,7 +110,7 @@ Route::middleware('auth')->group(function () {
             return response()->download(storage_path('app/public/' . $file));
         })->name('payment.receipt');
     });
-});
+
 
 // Location Routes
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
@@ -115,11 +120,9 @@ Route::get('/locations/{id}', [LocationController::class, 'show'])->name('locati
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
-// FAQ Route
-Route::get('/faq', [FAQController::class, 'index'])->name('faq.index');
 
 // Login Route
-=======
+
 
     // Hotel Booking Routes
     Route::post('/hotelbookings', [HotelBookingController::class, 'store'])->name('hotelbookings.store');
@@ -141,8 +144,10 @@ Route::get('/faq', [FAQController::class, 'index'])->name('faq.index');
 });
 
 // Auth Routes
->>>>>>> Stashed changes
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+
 
 // Include additional authentication routes
 require __DIR__ . '/auth.php';
+// FAQ Route
+Route::get('/faq', [FAQController::class, 'index'])->name('faq.index');

@@ -20,7 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (env('APP_ENV') !== 'local') {
+        // Force HTTPS natively if we are on Vercel, regardless of APP_ENV
+        if (isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) {
+            URL::forceScheme('https');
+        } elseif (env('APP_ENV') !== 'local') {
             URL::forceScheme('https');
         }
     }

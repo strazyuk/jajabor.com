@@ -4,6 +4,28 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
+// -----------------------------------------------------------------------
+// Vercel serverless: the repo filesystem is read-only.
+// Redirect storage and bootstrap/cache to the writable /tmp directory.
+// This must happen BEFORE Application::configure() so Laravel picks up
+// the new paths from the very first bootstrap step.
+// -----------------------------------------------------------------------
+if (getenv('APP_ENV') === 'production') {
+    $dirs = [
+        '/tmp/storage/app/public',
+        '/tmp/storage/framework/cache/data',
+        '/tmp/storage/framework/sessions',
+        '/tmp/storage/framework/views',
+        '/tmp/storage/logs',
+        '/tmp/bootstrap/cache',
+    ];
+    foreach ($dirs as $dir) {
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+    }
+}
+
 $app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
@@ -19,20 +41,10 @@ $app = Application::configure(basePath: dirname(__DIR__))
         //
     })->create();
 
-// Create /tmp/storage symlink for Vercel serverless environment.
-// Uses getenv() instead of $app->environment() to avoid calling
-// the container before it is fully booted (which causes ReflectionException on 'env').
+// Point Laravel's storage and bootstrap cache to /tmp
 if (getenv('APP_ENV') === 'production') {
-    $basePath = dirname(__DIR__);
-    $tmpStorage = '/tmp/storage';
-    $link = $basePath . '/public/storage';
-
-    if (!is_dir($tmpStorage)) {
-        mkdir($tmpStorage, 0755, true);
-    }
-    if (!file_exists($link) && !is_link($link)) {
-        symlink($tmpStorage, $link);
-    }
+    $app->useStoragePath('/tmp/storage');
+    $app->useBootstrapPath('/tmp/bootstrap');
 }
 
 return $app;

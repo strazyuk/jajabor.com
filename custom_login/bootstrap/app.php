@@ -6,11 +6,11 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 // -----------------------------------------------------------------------
 // Vercel serverless: the repo filesystem is read-only.
-// Redirect storage and bootstrap/cache to the writable /tmp directory.
-// This must happen BEFORE Application::configure() so Laravel picks up
-// the new paths from the very first bootstrap step.
+// We must aggressively redirect storage/ and bootstrap/cache to /tmp 
+// BEFORE Laravel configures itself.
+// $_ENV['APP_ENV'] is set by Vercel environment variables.
 // -----------------------------------------------------------------------
-if (getenv('APP_ENV') === 'production') {
+if (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] === 'production') {
     $dirs = [
         '/tmp/storage/app/public',
         '/tmp/storage/framework/cache/data',
@@ -41,8 +41,8 @@ $app = Application::configure(basePath: dirname(__DIR__))
         //
     })->create();
 
-// Point Laravel's storage and bootstrap cache to /tmp
-if (getenv('APP_ENV') === 'production') {
+// Force Laravel to use the writable /tmp paths 
+if (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] === 'production') {
     $app->useStoragePath('/tmp/storage');
     $app->useBootstrapPath('/tmp/bootstrap');
 }

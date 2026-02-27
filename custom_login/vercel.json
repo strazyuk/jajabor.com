@@ -2,11 +2,12 @@
     "version": 2,
     "buildCommand": "vite build",
     "outputDirectory": "public",
-    "functions": {
-        "api/index.php": {
-            "runtime": "vercel-php@0.9.0"
+    "builds": [
+        {
+            "src": "api/index.php",
+            "use": "vercel-php@0.9.0"
         }
-    },
+    ],
     "env": {
         "COMPOSER_INSTALL": "false"
     },

@@ -15,6 +15,6 @@
   "scripts": {
     "dev": "vite",
     "prod": "vite build",
-    "build": "npm run prod && composer install --no-dev --optimize-autoloader"
+    "build": "vite build"
   }
 }

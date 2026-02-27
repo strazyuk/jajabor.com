@@ -19,10 +19,14 @@ $app = Application::configure(basePath: dirname(__DIR__))
         //
     })->create();
 
-// Ensure writable storage symlink exists when running on Vercel (production, serverless)
-if ($app->environment('production')) {
+// Create /tmp/storage symlink for Vercel serverless environment.
+// Uses getenv() instead of $app->environment() to avoid calling
+// the container before it is fully booted (which causes ReflectionException on 'env').
+if (getenv('APP_ENV') === 'production') {
+    $basePath = dirname(__DIR__);
     $tmpStorage = '/tmp/storage';
-    $link = public_path('storage');
+    $link = $basePath . '/public/storage';
+
     if (!is_dir($tmpStorage)) {
         mkdir($tmpStorage, 0755, true);
     }

@@ -23,7 +23,13 @@ use Illuminate\Support\Facades\Route;
 
 // Welcome Page
 Route::get('/', function () {
-    return view('welcome');
+    $packages = \App\Models\Package::where('is_active', true)->take(4)->get();
+    $offers = \App\Models\Offer::where('is_active', true)->where('valid_until', '>', now())->take(1)->get();
+    $coupons = \App\Models\Coupon::where('expiration_date', '>', now())->take(2)->get();
+    $reviews = \App\Models\Review::where('is_featured', true)->take(3)->get();
+    $news = \App\Models\News::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get();
+
+    return view('welcome', compact('packages', 'offers', 'coupons', 'reviews', 'news'));
 })->name('home');
 
 
@@ -112,35 +118,45 @@ Route::middleware('auth')->group(function () {
     });
 
 
-// Location Routes
-Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
-Route::get('/locations/{id}', [LocationController::class, 'show'])->name('locations.show');
+    // Location Routes
+    Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
+    Route::get('/locations/{id}', [LocationController::class, 'show'])->name('locations.show');
 
-// Reviews Routes
-Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
-Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-
-
-// Login Route
+    // Reviews Routes
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 
-    // Hotel Booking Routes
-    Route::post('/hotelbookings', [HotelBookingController::class, 'store'])->name('hotelbookings.store');
-    Route::get('/hotelbookings/create/{hotel}', [HotelBookingController::class, 'create'])->name('hotelbookings.create');
+    // Login Route
+});
 
-    // Favorites Routes
-    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
-    Route::delete('/favorites/toggle/{favorite}', [FavoriteController::class, 'destroy'])->name('favorites.delete');
+// Admin Authentication Routes
+Route::get('admin/login', [App\Http\Controllers\Auth\AdminLoginController::class, 'create'])->name('admin.login')->middleware('guest');
+Route::post('admin/login', [App\Http\Controllers\Auth\AdminLoginController::class, 'store'])->middleware('guest');
 
-    // Hotel Payment Routes
-    Route::prefix('hotel/payment')->group(function () {
-        Route::post('/create-checkout-session/{hotel}', [HotelPaymentController::class, 'createCheckoutSession'])->name('hotel.payment.createCheckoutSession');
-        Route::get('/success', [HotelPaymentController::class, 'success'])->name('hotel.payment.success');
-        Route::get('/cancel', [HotelPaymentController::class, 'cancel'])->name('hotel.payment.cancel');
-        Route::get('/receipt/{file}', function ($file) {
-            return response()->download(storage_path('app/public/' . $file));
-        })->name('payment.receipt');
-    });
+// Admin Routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
+
+    // User Management
+    Route::get('/users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+    Route::post('/users', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('users.store');
+    Route::delete('/users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
+    Route::patch('/users/{user}/toggle-admin', [\App\Http\Controllers\Admin\UserController::class, 'toggleAdmin'])->name('users.toggle-admin');
+
+    // Booking Oversight
+    Route::get('/bookings', [\App\Http\Controllers\Admin\BookingOversightController::class, 'index'])->name('bookings.index');
+
+    // Inventory Management
+    Route::resource('flights', \App\Http\Controllers\Admin\FlightController::class);
+    Route::resource('hotels', \App\Http\Controllers\Admin\HotelController::class);
+    Route::resource('coupons', \App\Http\Controllers\Admin\CouponController::class);
+
+    // Frontpage Content Management
+    Route::resource('packages', \App\Http\Controllers\Admin\PackageController::class);
+    Route::resource('offers', \App\Http\Controllers\Admin\OfferController::class);
+    Route::resource('reviews', \App\Http\Controllers\Admin\ReviewController::class);
+    Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
 });
 
 // Auth Routes

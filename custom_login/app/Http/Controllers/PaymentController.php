@@ -5,11 +5,11 @@ use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use App\Models\Flight;
+use App\Models\Booking;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 class PaymentController extends Controller
-
 {
     /**
      * Show the payment page (using Stripe Checkout).
@@ -66,34 +66,41 @@ class PaymentController extends Controller
     /**
      * Handle successful payment.
      */
-   public function success($flightId)
-{
-    // Update flight status or perform necessary logic
-    $passengers = session('passengers', 1);
-    $loggedInUserName = Auth::user()->name;
-    $flight = Flight::findOrFail($flightId);
-    $flight->available_seats -= $passengers;
-    $flight->save();
+    public function success($flightId)
+    {
+        // Update flight status or perform necessary logic
+        $passengers = session('passengers', 1);
+        $loggedInUserName = Auth::user()->name;
+        $flight = Flight::findOrFail($flightId);
+        $flight->available_seats -= $passengers;
+        $flight->save();
 
-    // Data for the receipt
-    $receiptData = [
-        'flight' => $flight,
-        'passenger_name' => $loggedInUserName, // Fetch the passenger's name dynamically
-        'amount_paid' => $flight->price, // Replace with actual paid price
-        'transaction_date' => now(),
-    ];
+        // Record the booking for the user dashboard history
+        Booking::create([
+            'flight_name' => $flight->flight_number,
+            'user_name' => $loggedInUserName,
+            'status' => 'confirmed',
+        ]);
 
-    // Generate PDF receipt
-    $pdf = Pdf::loadView('payment.receipt', $receiptData);
-    $fileName = 'receipt_' . uniqid() . '.pdf';
-    $filePath = config('app.receipt.storage_path') . $fileName;
+        // Data for the receipt
+        $receiptData = [
+            'flight' => $flight,
+            'passenger_name' => $loggedInUserName, // Fetch the passenger's name dynamically
+            'amount_paid' => $flight->price, // Replace with actual paid price
+            'transaction_date' => now(),
+        ];
 
-    Storage::put($filePath, $pdf->output());
+        // Generate PDF receipt
+        $pdf = Pdf::loadView('payment.receipt', $receiptData);
+        $fileName = 'receipt_' . uniqid() . '.pdf';
+        $filePath = config('app.receipt.storage_path') . $fileName;
+
+        Storage::put($filePath, $pdf->output());
 
 
-    // Stream or download the PDF
-    return $pdf->download('receipt.pdf');
-}
+        // Stream or download the PDF
+        return $pdf->download('receipt.pdf');
+    }
 
     /**
      * Handle canceled payment.

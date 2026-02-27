@@ -44,17 +44,19 @@ class HotelPaymentController extends Controller
         try {
             $session = Session::create([
                 'payment_method_types' => ['card'],
-                'line_items' => [[
-                    'price_data' => [
-                        'currency' => 'usd',
-                        'product_data' => [
-                            'name' => $hotel->name,
-                            'description' => "Booking for Hotel: " . $hotel->name,
+                'line_items' => [
+                    [
+                        'price_data' => [
+                            'currency' => 'usd',
+                            'product_data' => [
+                                'name' => $hotel->name,
+                                'description' => "Booking for Hotel: " . $hotel->name,
+                            ],
+                            'unit_amount' => $totalPrice * 100, // Convert to cents
                         ],
-                        'unit_amount' => $totalPrice * 100, // Convert to cents
-                    ],
-                    'quantity' => 1,
-                ]],
+                        'quantity' => 1,
+                    ]
+                ],
                 'mode' => 'payment',
                 'success_url' => route('hotel.payment.success') . '?hotel_id=' . $hotel->id .
                     '&check_in_date=' . $checkInDate .
@@ -88,7 +90,7 @@ class HotelPaymentController extends Controller
         }
 
         // Ensure coupon is active and not expired
-        if (!$coupon->is_active || $coupon->expires_at < now()) {
+        if (!$coupon->is_active || $coupon->expiration_date < now()) {
             return 0; // Coupon not valid
         }
 

@@ -1,6 +1,16 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" :class="{ 'dark': darkMode }">
+
 <head>
+    <script>
+        // CRITICAL: Prevent dark mode flicker (FOUC) by checking theme BEFORE body renders
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -10,111 +20,66 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="{{ asset('css/complaints.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/complaint.css') }}" rel="stylesheet">
 
-    <!-- Custom Twitter-like Styles -->
+    <!-- Custom Styles -->
     <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
         body {
             font-family: 'Figtree', sans-serif;
-            background-image: url('https://www.nwslc.ac.uk/wp-content/uploads/hand-holding-loupe-traveller-table-scaled-e1681808146477.jpg');
-            background-size: cover; /* Ensures the image covers the whole background */
-            background-repeat: no-repeat; /* Prevents the image from repeating */
-            background-attachment: fixed; /* Keeps the background fixed while scrolling */
-            color: #14171A; /* Dark text */
-            margin: 0;
-            padding: 0;
-        }
-
-        .bg-gray-100 {
-            background-color: #F5F8FA; /* Background for general layout */
-        }
-
-        .dark\:bg-gray-900 {
-            background-color: #1A1C1D; /* Dark background for dark mode */
-        }
-
-        .bg-white {
-            background-color: #FFFFFF;
-        }
-
-        .dark\:bg-gray-800 {
-            background-color: #1C1E21; /* Dark mode header background */
-        }
-
-        .shadow {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .min-h-screen {
-            min-height: 100vh;
-        }
-
-        .font-sans {
-            font-family: 'Figtree', sans-serif;
-        }
-
-        .antialiased {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Button styles */
-        .btn-primary {
-            background-color: #1DA1F2; /* Twitter blue */
-            color: white;
-            border-radius: 30px; /* Rounded edges */
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
+            background-color: #F9FAFB;
             transition: background-color 0.3s ease;
         }
 
-        .btn-primary:hover {
-            background-color: #1991DB; /* Darker blue on hover */
+        .dark body {
+            background-color: #111827;
         }
 
-        /* Header styling */
-        .header {
-            color: #1DA1F2; /* Blue for headings like Twitter */
-            font-size: 24px;
-            font-weight: bold;
+        /* Page Transition effect */
+        .page-transition {
+            animation: fadeIn 0.5s ease-out;
         }
 
-        .max-w-7xl {
-            max-width: 80%;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Responsive padding */
-        .py-6 {
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
+        /* Toast Styles */
+        #toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        .px-4 {
-            padding-left: 1rem;
-            padding-right: 1rem;
+        .toast {
+            animation: slideIn 0.3s ease-out;
+            min-width: 300px;
         }
 
-        .sm\:px-6 {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
 
-        .lg\:px-8 {
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
-
-        .mb-4 {
-            margin-bottom: 1rem;
-        }
-
-        /* Responsive layout for large screens */
-        @media (min-width: 768px) {
-            .max-w-7xl {
-                max-width: 90%;
+            to {
+                transform: translateX(0);
+                opacity: 1;
             }
         }
     </style>
@@ -123,42 +88,68 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+<body class="font-sans antialiased text-gray-900 dark:text-gray-100">
+    <div class="min-h-screen bg-gray-50 dark:bg-gray-900 page-transition">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
         @isset($header)
-            <header class="bg-white dark:bg-gray-800 shadow">
+            <header
+                class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm border-b border-gray-100 dark:border-gray-700 pt-16">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <div class="header">
+                    <h2 class="font-bold text-2xl text-blue-600 dark:text-blue-400 leading-tight">
                         {{ $header }}
-                    </div>
+                    </h2>
                 </div>
             </header>
         @endisset
-        @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                <span class="block sm:inline">{{ session('success') }}</span>
-            </div>
-        @endif
 
-        @if (session('error'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                <span class="block sm:inline">{{ session('error') }}</span>
-            </div>
-        @endif
+        <!-- Toast Notifications Placeholder -->
+        <div id="toast-container"></div>
 
-
-
-
+        <main class="pt-16">
             @if(View::hasSection('content'))
-        @yield('content')
-    @else
-        {{ $slot ?? '' }}
-    @endif
-
+                @yield('content')
+            @else
+                {{ $slot ?? '' }}
+            @endif
         </main>
     </div>
+
+    <script>
+        // QOL: Toast Notification Helper
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgClass = type === 'success' ? 'bg-green-600' : 'bg-red-600';
+
+            toast.className = `toast ${bgClass} text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center justify-between gap-4 backdrop-blur-md`;
+            toast.innerHTML = `
+                <span class="font-bold text-sm">${message}</span>
+                <button onclick="this.parentElement.remove()" class="text-white opacity-50 hover:opacity-100">&times;</button>
+            `;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => toast.remove(), 500);
+            }, 5000);
+        }
+
+        // Logic to show session messages as toasts
+        @if(session('success'))
+            window.onload = () => showToast("{{ session('success') }}", 'success');
+        @endif
+        @if(session('error'))
+            window.onload = () => showToast("{{ session('error') }}", 'error');
+        @endif
+
+        // Dark Mode Toggle Listener
+        document.addEventListener('dark-mode-toggle', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('darkMode', !isDark);
+        });
+    </script>
 </body>
+
 </html>

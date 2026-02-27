@@ -11,7 +11,7 @@ class Booking extends Model
 
     protected $table = 'bookings';
 
-    protected $fillable = ['flight_name', 'user_name', 'status'];
+    protected $fillable = ['flight_name', 'user_name', 'status', 'total_price'];
 
     // Default attributes
     protected $attributes = [
@@ -24,5 +24,13 @@ class Booking extends Model
     public function flight()
     {
         return $this->belongsTo(Flight::class, 'flight_name', 'flight_number');
+    }
+
+    /**
+     * Relationship to the User model.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_name', 'name');
     }
 }

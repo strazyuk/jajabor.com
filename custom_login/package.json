@@ -1,8 +1,19 @@
 {
+  "type": "module",
   "devDependencies": {
-    "esbuild": "^0.24.0"
+    "@tailwindcss/forms": "^0.5.11",
+    "alpinejs": "^3.15.8",
+    "autoprefixer": "^10.4.27",
+    "axios": "^1.13.5",
+    "bootstrap": "^5.3.8",
+    "esbuild": "^0.24.0",
+    "laravel-vite-plugin": "^1.0.0",
+    "sass": "^1.0.0",
+    "tailwindcss": "^3.4.19",
+    "vite": "^5.0.0"
   },
   "scripts": {
-    "dev": "esbuild --serve=8000 --outdir=dist"  
+    "dev": "vite",
+    "build": "vite build"
   }
 }

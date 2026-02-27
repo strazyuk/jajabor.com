@@ -14,8 +14,8 @@ class CouponController extends Controller
 
         $coupon = Coupon::where('code', $request->coupon_code)
             ->where(function ($query) {
-                $query->whereNull('expires_at')
-                      ->orWhere('expires_at', '>=', now());
+                $query->whereNull('expiration_date')
+                    ->orWhere('expiration_date', '>=', now());
             })
             ->first();
 

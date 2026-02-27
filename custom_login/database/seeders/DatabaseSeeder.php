@@ -23,7 +23,26 @@ class DatabaseSeeder extends Seeder
             User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'test@example.com',
+                'is_admin' => false,
             ]);
         }
+
+        // Seed an Admin User
+        if (!User::where('email', 'admin@example.com')->exists()) {
+            User::factory()->create([
+                'name' => 'Super Admin',
+                'email' => 'admin@example.com',
+                'password' => bcrypt('password'), // or Hash::make('password')
+                'is_admin' => true,
+            ]);
+        }
+
+        // Seed Frontpage Dynamic Content
+        $this->call([
+            PackageSeeder::class,
+            OfferSeeder::class,
+            NewsSeeder::class,
+            ReviewSeeder::class,
+        ]);
     }
 }

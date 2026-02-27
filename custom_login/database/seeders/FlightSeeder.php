@@ -16,6 +16,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(2)->addHours(6),
             'price' => 300.50,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -26,6 +27,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(3)->addHours(4),
             'price' => 200.75,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -36,6 +38,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(1)->addHours(2),
             'price' => 150.25,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -46,6 +49,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(4)->addHours(3),
             'price' => 180.00,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -56,6 +60,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(5)->addHours(5),
             'price' => 220.30,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -66,6 +71,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(6)->addHours(1.5),
             'price' => 99.99,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -76,6 +82,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(7)->addHours(4.5),
             'price' => 250.40,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -86,6 +93,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(8)->addHours(2.5),
             'price' => 175.80,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -96,6 +104,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(9)->addHours(2),
             'price' => 120.45,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -106,6 +115,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(10)->addHours(2.5),
             'price' => 140.30,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -116,6 +126,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(11)->addHours(3),
             'price' => 190.20,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -126,6 +137,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(12)->addHours(3.5),
             'price' => 160.75,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -136,6 +148,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(13)->addHours(1.5),
             'price' => 110.50,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -146,6 +159,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(14)->addHours(2),
             'price' => 125.60,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
 
         Flight::create([
@@ -156,6 +170,7 @@ class FlightSeeder extends Seeder
             'arrival_time' => now()->addDays(15)->addHours(1),
             'price' => 90.00,
             'is_available' => true,
+            'available_seats' => 50,
         ]);
     }
 }
